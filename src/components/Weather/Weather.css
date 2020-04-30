@@ -1,0 +1,27 @@
+
+.weather {
+  background-color: #492F46;
+  padding: 30px;
+  width: 70%;
+  text-align: left;
+}
+
+.left {
+  float: left;
+}
+.left2 {
+  /* https://colinaarts-com.herokuapp.com/articles/the-magic-of-overflow-hidden#making-room-for-floats */
+  overflow: hidden;
+  display: block;
+  padding: 0 4px 0 10px
+}
+.left2 input {
+  width: 100%
+}
+
+
+.refresh {
+  width: 100%;
+  font-size: 1rem;
+  text-align: right;
+}
