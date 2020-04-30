@@ -9,13 +9,15 @@ export const Weather = (props) => {
   const [hasError, setError] = useState(false);
   const [apiResponse, setApiResponse] = useState();
   const [seconds, setSeconds] = useState(refreshTimeoutSeconds);
+
+  const [searchHistory, setSearchHistory] = useState([]);
+
   const isMounted = useRef(false);
 
   // Side effect to set (and clear) a new timer each time a valid location is entered
   // Don't set timer on component mount
   useEffect(() => {
     if (isMounted.current && !hasError) {
-      console.log("fetching");
       const interval = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
@@ -32,15 +34,39 @@ export const Weather = (props) => {
       fetchData();
     }
   }, [seconds]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     fetchData();
     resetInterval();
+    setLocation('');
   };
 
   const resetInterval = () => {
     setSeconds(refreshTimeoutSeconds);
   };
+
+  const handleApiResponse = (json) => {
+    if (json.cod === 200) { // API returns a successful response code as a number, but a 4?? as a string
+      setError(undefined);
+
+      // add the previous response to the search history, if there is one
+      apiResponse && setSearchHistory(searchHistory => [...searchHistory, apiResponse]);
+
+      if (searchHistory.length > 4) {
+        const n = searchHistory.shift();
+        setSearchHistory(searchHistory);
+      }
+      
+      console.log(searchHistory.reverse);
+      setApiResponse(json);
+
+    } else {
+      setApiResponse(undefined); 
+      json.cod === '404' && setError(json.message); // city not found
+      json.cod === '400' && setError(json.message); // Nothing to geocode
+    }
+  }
 
   const fetchData = () => {
     fetch(
@@ -50,44 +76,56 @@ export const Weather = (props) => {
         return response.json();
       })
       .then(function (json) {
-        json.cod = 404 && setError(json.message); // city not found
-        json.cod = 400 && setError(json.message); // Nothing to geocode
-        json.cod = 200 && setApiResponse(json);
+        handleApiResponse(json);
       })
       .catch((error) => {
         setError(error);
       });
   };
 
-  return (
-    <div className="weather">
-      <form onSubmit={handleSubmit}>
-
-        <label className="left" htmlFor="location">
-          Enter your location:&nbsp;
-        </label>
-
-        <span className="left2">
-        <input
-          id="location"
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          autofocus="true"
-        />
-        </span>
-
-      </form>
-      {hasError && <h3>{hasError}</h3>}
-
-      {apiResponse && apiResponse.main && (
-        <WeatherResult response={apiResponse} />
-      )}
-      {apiResponse && !hasError &&
-        <div className="refresh">
-          Refreshing in {seconds}s
-        </div>
-      }
+  const searchHistoryContainers = searchHistory.map(function(searchItem){
+    return (
+      <div className="search-Item">
+        <WeatherResult searchItem={searchItem} flatDisplay={true}/>
       </div>
+    )
+  });
+
+  return (
+    <>
+      <div className="weather">
+        <form onSubmit={handleSubmit}>
+
+          <label className="left" htmlFor="location">
+            Enter your location:&nbsp;
+          </label>
+
+          <span className="left2">
+          <input
+            id="location"
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            autoFocus={true}
+          />
+          </span>
+
+        </form>
+        {hasError && <h4>{hasError}</h4>}
+
+        {apiResponse && apiResponse.main && (
+          <WeatherResult searchItem={apiResponse} />
+        )}
+        {apiResponse && !hasError &&
+          <div className="refresh">
+            Refreshing in {seconds}s
+          </div> 
+        }
+      </div>
+
+      <div className="search-history">
+        {searchHistoryContainers}
+      </div>
+    </>
   );
 };

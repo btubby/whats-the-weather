@@ -1,16 +1,25 @@
 import React from "react";
 import "./WeatherResult.css";
 
-export const WeatherResult = ({response}) => {
-  return (
-    <div className="results">
-       {response.name}
+export const WeatherResult = ({searchItem, flatDisplay}) => {
+  if (flatDisplay) {
+    return (
+      <div className="search-result-flat">
+        {searchItem.name}, {searchItem.main.temp} &#x2103;, {searchItem.main.pressure} hpa
+      </div>
+    );
+  } else {
+    
+    return (
+      <div className="search-result">
+       {searchItem.name}
        <br />
-       {response.main.temp} &#x2103;
+       {searchItem.main.temp} &#x2103;
        <br />
-       {response.main.pressure}&nbsp;hpa
+       {searchItem.main.pressure} hpa
        <br />
-       {response.main.humidity}&nbsp;%
-    </div>
-  );
+       {searchItem.main.humidity} %
+      </div>
+    );
+   }
 }

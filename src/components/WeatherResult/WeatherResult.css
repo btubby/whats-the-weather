@@ -1,6 +1,13 @@
-.results {
+.search-result {
     border-style: dotted;
     border-color: #812E7A;
     margin: 10px 0 10px 0;
     padding: 10px;
+  }
+
+  .search-result-flat {
+    border-style: dotted;
+    border-color:#D5771A;
+    margin: 10px 0 10px 0;
+    padding: 5px;
   }
