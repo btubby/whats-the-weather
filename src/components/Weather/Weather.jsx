@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { WeatherResult } from "../WeatherResult/WeatherResult";
 import "./Weather.css";
 
-export const Weather = (props) => {
-  const refreshTimeoutSeconds = 60;
+export const Weather = ({refreshTimeoutSeconds, apiKey}) => {
+ 
   const isMounted = useRef(false);
 
   const [location, setLocation] = useState("");
@@ -70,7 +70,7 @@ export const Weather = (props) => {
 
   const fetchData = (location) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${props.apiKey}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`
     )
       .then(function (response) {
         return response.json();
