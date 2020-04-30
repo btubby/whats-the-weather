@@ -7,6 +7,5 @@ describe("Example", () => {
     expect(nameToUppercase("example")).toBe("EXAMPLE");
   });
 
-  //TODO: Write tests for your ** components **
-
+  // TODO: Write tests for your ** components **
 });
