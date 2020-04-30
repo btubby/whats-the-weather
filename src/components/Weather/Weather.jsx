@@ -4,15 +4,14 @@ import "./Weather.css";
 
 export const Weather = (props) => {
   const refreshTimeoutSeconds = 60;
+  const isMounted = useRef(false);
 
   const [location, setLocation] = useState("");
+  const [previouslocation, setPreviousLocation] = useState("");
   const [hasError, setError] = useState(false);
   const [apiResponse, setApiResponse] = useState();
   const [seconds, setSeconds] = useState(refreshTimeoutSeconds);
-
   const [searchHistory, setSearchHistory] = useState([]);
-
-  const isMounted = useRef(false);
 
   // Side effect to set (and clear) a new timer each time a valid location is entered
   // Don't set timer on component mount
@@ -27,17 +26,18 @@ export const Weather = (props) => {
     }
   }, [location, apiResponse]);
 
-  // Side effect to make a new API call when the minute timer is up
+  // Side effect to make a new API call when the timer is up
   useEffect(() => {
     if (seconds <= 0) {
       resetInterval();
-      fetchData();
+      fetchData(previouslocation);
+      
     }
   }, [seconds]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetchData();
+    fetchData(location);
     resetInterval();
     setLocation('');
   };
@@ -50,15 +50,15 @@ export const Weather = (props) => {
     if (json.cod === 200) { // API returns a successful response code as a number, but a 4?? as a string
       setError(undefined);
 
-      // add the previous response to the search history, if there is one
-      apiResponse && setSearchHistory(searchHistory => [...searchHistory, apiResponse]);
-
-      if (searchHistory.length > 4) {
-        const n = searchHistory.shift();
+      if (apiResponse) {
+        // if we have a previous result, add it to the history array and store
+        searchHistory.push(apiResponse);
         setSearchHistory(searchHistory);
       }
-      
-      console.log(searchHistory.reverse);
+      if (searchHistory.length >= 6) {
+        searchHistory.shift();
+        setSearchHistory(searchHistory);
+      }
       setApiResponse(json);
 
     } else {
@@ -68,7 +68,7 @@ export const Weather = (props) => {
     }
   }
 
-  const fetchData = () => {
+  const fetchData = (location) => {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${props.apiKey}&units=metric`
     )
@@ -81,9 +81,11 @@ export const Weather = (props) => {
       .catch((error) => {
         setError(error);
       });
+      // save the location as we may need to repeat the search after refreshTimeoutSeconds
+      setPreviousLocation(location);
   };
 
-  const searchHistoryContainers = searchHistory.map(function(searchItem){
+  const searchHistoryContainers = searchHistory.slice(0).reverse().map(function(searchItem){
     return (
       <div className="search-Item">
         <WeatherResult searchItem={searchItem} flatDisplay={true}/>
@@ -92,14 +94,12 @@ export const Weather = (props) => {
   });
 
   return (
-    <>
+    <div className="wrapper">
       <div className="weather">
         <form onSubmit={handleSubmit}>
-
           <label className="left" htmlFor="location">
             Enter your location:&nbsp;
           </label>
-
           <span className="left2">
           <input
             id="location"
@@ -109,12 +109,10 @@ export const Weather = (props) => {
             autoFocus={true}
           />
           </span>
-
         </form>
         {hasError && <h4>{hasError}</h4>}
-
         {apiResponse && apiResponse.main && (
-          <WeatherResult searchItem={apiResponse} />
+          <WeatherResult searchItem={apiResponse} flatDisplay={false}/>
         )}
         {apiResponse && !hasError &&
           <div className="refresh">
@@ -122,10 +120,9 @@ export const Weather = (props) => {
           </div> 
         }
       </div>
-
       <div className="search-history">
         {searchHistoryContainers}
       </div>
-    </>
+    </div>
   );
 };

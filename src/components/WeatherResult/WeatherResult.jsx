@@ -5,11 +5,11 @@ export const WeatherResult = ({searchItem, flatDisplay}) => {
   if (flatDisplay) {
     return (
       <div className="search-result-flat">
-        {searchItem.name}, {searchItem.main.temp} &#x2103;, {searchItem.main.pressure} hpa
+        {searchItem.name}<br />
+        {searchItem.main.temp}&#x2103;, {searchItem.main.pressure}hpa, {searchItem.main.humidity}%
       </div>
     );
   } else {
-    
     return (
       <div className="search-result">
        {searchItem.name}

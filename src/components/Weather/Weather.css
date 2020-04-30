@@ -2,8 +2,8 @@
 .weather {
   background-color: #492F46;
   padding: 30px;
-  width: 70%;
   text-align: left;
+  font-size: 1.2rem;
 }
 
 .left {
@@ -20,10 +20,14 @@
 
 .wrapper {
   display:flex;
-  flex-direction: column;
+  height: 250px;
 }
 .refresh {
   width: 100%;
   font-size: 1rem;
   text-align: right;
+}
+.search-history {
+  /* border: 1px solid green; */
+  padding-left: 3px;
 }

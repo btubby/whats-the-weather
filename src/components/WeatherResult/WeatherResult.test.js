@@ -21,9 +21,9 @@ afterEach(() => {
 
 it("renders", () => {
   act(() => {
-    render(<WeatherResult response={mockData} />, container);
+    render(<WeatherResult searchItem={mockData} flatDisplay={false} />, container);
   });
-  console.log(container.textContent)
+  // console.log(container.textContent)
   // test the component renders the city name, temp, pressure and humidity in the mock response
   expect(container.textContent.toBeDefined);
   expect(container.textContent).toContain('London');
@@ -31,5 +31,6 @@ it("renders", () => {
   expect(container.textContent).toContain('1032 hpa');
   expect(container.textContent).toContain('71 %');
   
+  // TODO test the flatDisplay=true variation
 
 });

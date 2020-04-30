@@ -3,11 +3,13 @@
     border-color: #812E7A;
     margin: 10px 0 10px 0;
     padding: 10px;
+    font-size: 1.3rem;
   }
 
   .search-result-flat {
-    border-style: dotted;
-    border-color:#D5771A;
-    margin: 10px 0 10px 0;
-    padding: 5px;
+    background-color: #492F46;
+    padding: 2px;
+    font-size: 0.7rem;
+    width: 130px;
+    height: 46px;
   }
