@@ -39,32 +39,32 @@ export const Weather = () => {
     event.preventDefault();
     resetTimeout();
     fetchData(location);
-    setLocation(''); // clear the form field
+    setLocation(""); // clear the form field
   };
-  
+
   const resetTimeout = () => {
     setSeconds(refreshTimeoutSeconds);
   };
-  
+
   const fetchData = (location) => {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`
-      )
-      .then(response =>  {
+    )
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         handleApiResponse(data);
       })
       .catch((error) => {
-          setError(error);
-      }
-    );
+        setError(error);
+      });
     setPreviousLocation(location);
-   };
+  };
 
   const handleApiResponse = (json) => {
-    if (json.cod === 200) { // API returns a successful response code as a number, but a 4?? as a string
+    if (json.cod === 200) {
+      // API returns a successful response code as a number, but a 4?? as a string
       setError(undefined);
 
       if (apiResponse) {
@@ -77,21 +77,27 @@ export const Weather = () => {
         setSearchHistory(searchHistory);
       }
       setApiResponse(json);
-
     } else {
-      setApiResponse(undefined); 
-      json.cod === '404' && setError(json.message); // city not found
-      json.cod === '400' && setError(json.message); // Nothing to geocode
+      setApiResponse(undefined);
+      json.cod === "404" && setError(json.message); // city not found
+      json.cod === "400" && setError(json.message); // Nothing to geocode
     }
-  }
+  };
 
-  const searchHistoryContainers = searchHistory.slice(0).reverse().map(function(searchItem, i){
-    return (
-      <div className="search-Item" key={i}>
-        <WeatherResult searchItem={searchItem} searchHistory={true} wantsKelvin={wantsKelvin}/>
-      </div>
-    )
-  });
+  const searchHistoryContainers = searchHistory
+    .slice(0)
+    .reverse()
+    .map(function (searchItem, i) {
+      return (
+        <div className="search-Item" key={i}>
+          <WeatherResult
+            searchItem={searchItem}
+            searchHistory={true}
+            wantsKelvin={wantsKelvin}
+          />
+        </div>
+      );
+    });
 
   return (
     <div className="wrapper">
@@ -109,9 +115,9 @@ export const Weather = () => {
               autoFocus={true}
             />
           </span>
-          <input 
-            type="checkbox" 
-            id="temperature-unit" 
+          <input
+            type="checkbox"
+            id="temperature-unit"
             onChange={(e) => setwantsKelvin(e.target.checked)}
             checked={wantsKelvin}
           />
@@ -121,17 +127,17 @@ export const Weather = () => {
         </form>
         {hasError && <h4>{hasError}</h4>}
         {apiResponse && apiResponse.main && (
-          <WeatherResult searchItem={apiResponse} searchHistory={false} wantsKelvin={wantsKelvin}/>
+          <WeatherResult
+            searchItem={apiResponse}
+            searchHistory={false}
+            wantsKelvin={wantsKelvin}
+          />
         )}
-        {apiResponse && !hasError &&
-          <div className="refresh">
-            Refreshing in {seconds}s
-          </div> 
-        }
+        {apiResponse && !hasError && (
+          <div className="refresh">Refreshing in {seconds}s</div>
+        )}
       </div>
-      <div className="search-history">
-        {searchHistoryContainers}
-      </div>
+      <div className="search-history">{searchHistoryContainers}</div>
     </div>
   );
-}
+};

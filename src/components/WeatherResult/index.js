@@ -1,2 +1,2 @@
-import { WeatherResult } from './WeatherResult';
+import { WeatherResult } from "./WeatherResult";
 export default WeatherResult;

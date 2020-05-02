@@ -1,7 +1,7 @@
-import React from 'react';
-import { Weather } from './Weather';
-import { unmountComponentAtNode, render } from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import React from "react";
+import { Weather } from "./Weather";
+import { unmountComponentAtNode, render } from "react-dom";
+import { act } from "react-dom/test-utils";
 
 let container = null;
 beforeEach(() => {
@@ -18,11 +18,10 @@ afterEach(() => {
 });
 
 describe("Given a Weather component", () => {
-  it('renders correctly', () => {
+  it("renders correctly", () => {
     act(() => {
       render(<Weather />, container);
     });
     expect(container.firstChild).toMatchSnapshot();
   });
 });
-
