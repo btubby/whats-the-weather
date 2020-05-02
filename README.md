@@ -1,7 +1,19 @@
 Metrichor Challenge
 =================
 
+
 The purpose of this exercise is to create a live weather report for a given location.
+
+Ben's TODO/possible improvements
+--------------------------------
+- convert codebase to typescript
+- results should show country as well as city - London, UK vs London, CA for example
+- deal with spelling mistakes in input - Can’t find ‘Kondon’, did you mean London?
+- customise the error messages from the API
+- handle cities that occur in multiple places, eg 'San Jose' - look at getting the API to return a list and offer a choice
+- make more responsive - look at imtroducing breakpoints
+- look at the typography used
+
 
 What you need to do
 -------------------
@@ -33,6 +45,7 @@ What you need to do
   ```npm test```
 
 5. *You should deliver your solution as a `git` repository, preferably hosted on GitHub.*
+
 
 Things you should know
 -------------------
