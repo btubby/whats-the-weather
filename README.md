@@ -8,10 +8,10 @@ Ben's TODO/possible improvements
 --------------------------------
 - convert codebase to typescript
 - results should show country as well as city - London, UK vs London, CA for example
-- deal with spelling mistakes in input - Can’t find ‘Kondon’, did you mean London?
 - customise the error messages from the API
 - handle cities that occur in multiple places, eg 'San Jose' - look at getting the API to return a list and offer a choice
-- make more responsive - look at imtroducing breakpoints
+- make more responsive - look at introducing breakpoints
+- deal with spelling mistakes/typos in input - Can’t find ‘Kondon’, did you mean London?
 - look at the typography used
 
 
