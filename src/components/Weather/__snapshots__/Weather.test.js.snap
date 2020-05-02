@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given a Weather component renders correctly 1`] = `
+<div
+  class="wrapper"
+>
+  <div
+    class="weather"
+  >
+    <form>
+      <label
+        class="left"
+        for="location"
+      >
+        Enter your location: 
+      </label>
+      <span
+        class="left2"
+      >
+        <input
+          id="location"
+          type="text"
+          value=""
+        />
+      </span>
+      <input
+        id="temperature-unit"
+        type="checkbox"
+      />
+      <label
+        class="display-kelvin"
+        for="temperature-unit"
+      >
+        Display temperatures in Kelvin
+      </label>
+    </form>
+  </div>
+  <div
+    class="search-history"
+  />
+</div>
+`;

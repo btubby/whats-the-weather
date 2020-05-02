@@ -5,7 +5,6 @@
   text-align: left;
   font-size: 1.2rem;
 }
-
 .left {
   float: left;
 }
@@ -17,7 +16,6 @@
 .left2 input {
   width: 100%
 }
-
 .wrapper {
   display:flex;
   height: 250px;
@@ -28,6 +26,8 @@
   text-align: right;
 }
 .search-history {
-  /* border: 1px solid green; */
   padding-left: 3px;
+}
+.display-kelvin {
+  font-size: 0.8rem;
 }

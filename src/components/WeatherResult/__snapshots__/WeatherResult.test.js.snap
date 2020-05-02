@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given a WeatherResult component renders correctly 1`] = `
+<div
+  class="search-result"
+>
+  London
+  <br />
+  285.59
+   
+  ℃
+  <br />
+  1032
+   hpa
+  <br />
+  71
+   %
+</div>
+`;
+
+exports[`Given a WeatherResult component with a searchHistory prop renders correctly 1`] = `
+<div
+  class="search-result-history"
+>
+  London
+  <br />
+  285.59
+  ℃
+  , 
+  1032
+  hpa, 
+  71
+  %
+</div>
+`;
+
+exports[`Given a WeatherResult component, displaying temperature in Kelvin renders correctly 1`] = `
+<div
+  class="search-result"
+>
+  London
+  <br />
+  558.74
+   
+  K
+  <br />
+  1032
+   hpa
+  <br />
+  71
+   %
+</div>
+`;
