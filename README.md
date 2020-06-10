@@ -16,6 +16,6 @@ TODO/possible improvements
 
 Details
 -------
-Project puts data from [OpenWeatherMap](https://openweathermap.org) using (free) API key
+Project pulls data from [OpenWeatherMap](https://openweathermap.org) using (free) API key
  
 
