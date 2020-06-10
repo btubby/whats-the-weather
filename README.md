@@ -1,5 +1,5 @@
-live locationsweather 
-======================
+live location weather report
+=============================
 
 A live weather report for a given location.
 
